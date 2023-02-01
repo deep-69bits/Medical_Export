@@ -4,8 +4,9 @@ import React from 'react'
 import { Inter } from '@next/font/google'
 import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
+import Link from 'next/link';
 
-export default function index({shop}){
+export default function index({shop,product}){
   const client = createClient({
     projectId: "b5hbcmsc",
     dataset: "production",
@@ -15,13 +16,29 @@ export default function index({shop}){
   function urlFor(source) {
     return builder.image(source);
   }
+
   return (
     <div>
      <Navbar/>
-      <h1 className='text-center mt-10 font-normal text-5xl block px-10'>{shop[0].title}</h1>
-      <hr  className=' mt-10 mb-10 w-9/12  m-auto'/>
-      <h3 className='mt-10 font-light text-2xl px-10'>{shop[0].content}</h3>
-     <Footer/>
+     <div className='px-10'>
+     <h1 className='text-center mt-10 font-normal text-5xl block '>{shop[0].title}</h1>
+     <hr  className=' mt-10 mb-10 w-9/12  m-auto'/>
+     <h3 className='mt-10 font-light text-2xl '>{shop[0].content}</h3>
+     <div  className='grid grid-flow-row grid-cols-3 m-auto align-middle w-[90%] mt-20'>
+     {
+       product.map((item,index)=>{
+         return(
+          <Link href={"/shop/"+item._id}>
+          <div  className='mt-8 w-[400px] h-[400px] shadow-lg ' >
+          <img className='h-[300px] w-full' src={urlFor(item.productimage).url()}  />
+          </div>
+          </Link>
+           );
+          })
+        }
+    </div>
+    </div>
+    <Footer/>
     </div>
   )
 }
@@ -32,12 +49,15 @@ export async function getServerSideProps(context) {
     useCdn: false,
   });
   const query = `*[_type == "shop"]`;
+  const query2 = `*[_type == "product"]`;
   const shop = await client.fetch(query);
+  const product = await client.fetch(query2)
   console.log(shop);
  
   return {
     props: {
-     shop
+     shop,
+     product
     },
   };
 }

@@ -8,6 +8,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from 'react-responsive-carousel';
 import Footer from '../components/Footer';
 import Navbar from '@/components/Navbar';
+import Link from 'next/link';
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -47,13 +48,15 @@ export default function Home({products,craousal}) {
      {
         products.map((item,index)=>{
           return(
+            <Link href={"/shop/"+item._id}>
             <div key={index} className='flex-none w-[300px] h-[300px]  mx-10 md:pb-4   '>
             <img className='w-[400px] h-[300px]' src={urlFor(item.productimage).url()}  />
             <div className='w-full flex mt-2 justify-between'>
-             <h1 className='font-bold text-xl'>{item.name}</h1>
-             <h1 className='font-bold text-xl'>${item.price}</h1>
+            <h1 className='font-bold text-xl'>{item.name}</h1>
+            <h1 className='font-bold text-xl'>${item.price}</h1>
             </div>
             </div>
+            </Link>
           );
         })
      }
