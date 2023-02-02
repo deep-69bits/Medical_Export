@@ -9,6 +9,11 @@ import { Carousel } from 'react-responsive-carousel';
 import Footer from '../components/Footer';
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
+import 'swiper/css'
+import 'swiper/css/pagination'
+import { Autoplay, Pagination } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/react'
+
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -27,28 +32,39 @@ export default function Home({products,craousal}) {
   }
   return (
     <div>
+    <Head>
+    <title>Medical Export</title>
+    </Head>
     <Navbar/>
     <div>
-    <Carousel>
-    
-    {
-      craousal.map((item,index)=>{
-        return(
-          <div key={index}>
-          <img src={urlFor(item.image).width(1300).height(500).url()}  />
-          <p className="legend">{item.content}</p>
-          </div>
-        );
-      })
-    }
-   </Carousel>
+   <Swiper
+   pagination={{clickable: true,}}
+   autoplay={{ delay: 3000,}}
+   loop={true}
+   modules={[Pagination, Autoplay]}
+   > 
+   {
+    craousal.map((item,index)=>{
+      return(
+        <SwiperSlide key={index}>
+        <div >
+        <img  className='w-full brightness-50  lg:h-[600px] sm:h-[300px]' src={urlFor(item.image).url()}  />
+        <p className='text-white font-semibold font-sans lg:text-5xl sm:text-3xl text-center lg:w-[30%] sm:w-full m-auto -translate-y-44 '>{item.content}</p>
+        </div>
+        </SwiperSlide>
+      );
+    })
+   }
+
+  </Swiper>
     </div>
     <h1 className='px-10 text-5xl font-bold mx-10 my-20'>Products</h1>
+
     <div className='w-[95%] m-auto h-[350px]  mt-2 flex  overflow-x-auto'>
      {
         products.map((item,index)=>{
           return(
-            <Link href={"/shop/"+item._id}>
+            <Link href={"/shop/"+item._id} className="hover:scale-105 transition duration-500">
             <div key={index} className='flex-none w-[300px] h-[300px]  mx-10 md:pb-4   '>
             <img className='w-[400px] h-[300px]' src={urlFor(item.productimage).url()}  />
             <div className='w-full flex mt-2 justify-between'>

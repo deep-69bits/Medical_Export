@@ -5,6 +5,7 @@ import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import Link from 'next/link';
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 export default function product({singleproduct}){
   const client = createClient({
@@ -26,11 +27,14 @@ export default function product({singleproduct}){
         singleproduct.map((item,index)=>{
           if(item._id==product){
             return(
-              <div className='grid grid-flow-row grid-cols-2 mt-10 px-10'>
+              <div className='grid grid-flow-row lg:grid-cols-2 sm:grid-cols-1 mt-10 px-10'>
+              <Head>
+              <title>{item.name}</title>
+              </Head>
               <div>
               <img className='h-[600px] w-full' src={urlFor(item.productimage).url()}  />
               </div>
-              <div className='w-5/6 px-10 py-10'>
+              <div className='lg:w-5/6 sm:w-ful px-10 py-10'>
                 <h1 className='text-5xl font-semibold'>{item.name}</h1>
                 <h1 className='text-2xl mt-5 mb-5'>${item.price}</h1>
                 <h3 className='text-xl font-light'> {item.content}</h3>

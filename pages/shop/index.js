@@ -5,7 +5,7 @@ import { Inter } from '@next/font/google'
 import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import Link from 'next/link';
-
+import Head from 'next/head'
 export default function index({shop,product}){
   const client = createClient({
     projectId: "b5hbcmsc",
@@ -20,11 +20,14 @@ export default function index({shop,product}){
   return (
     <div>
      <Navbar/>
+     <Head>
+     <title>Medical Export | Shop</title>
+     </Head>
      <div className='px-10'>
      <h1 className='text-center mt-10 font-normal text-5xl block '>{shop[0].title}</h1>
      <hr  className=' mt-10 mb-10 w-9/12  m-auto'/>
      <h3 className='mt-10 font-light text-2xl '>{shop[0].content}</h3>
-     <div  className='grid grid-flow-row grid-cols-3 m-auto align-middle w-[90%] mt-20'>
+     <div  className='grid grid-flow-row lg:grid-cols-3 sm:grid-cols-1 m-auto align-middle w-[90%] mt-20'>
      {
        product.map((item,index)=>{
          return(
