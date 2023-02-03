@@ -19,7 +19,6 @@ export default function product({singleproduct}){
   }
   const router = useRouter()
   const { product } = router.query
-   console.log(router.query)
   return (
     <div>
       <Navbar/>
@@ -32,14 +31,15 @@ export default function product({singleproduct}){
               <title>{item.name}</title>
               </Head>
               <div>
-              <img className='h-[600px] w-full' src={urlFor(item.productimage).url()}  />
+              <img className='lg:h-[600px] sm:h-[300px] w-full' src={urlFor(item.productimage).url()}  />
               </div>
-              <div className='lg:w-5/6 sm:w-ful px-10 py-10'>
+              <div className='lg:w-5/6 sm:w-ful lg:px-10 py-10'>
                 <h1 className='text-5xl font-semibold'>{item.name}</h1>
                 <h1 className='text-2xl mt-5 mb-5'>${item.price}</h1>
                 <h3 className='text-xl font-light'> {item.content}</h3>
+                <Link href={"/inquery/"+item._id} className='w-full text-center bg-black text-xl text-white py-2 my-4 block font-semibold ' >Inquire</Link>
               </div>
-              
+                
               </div>
             );
           }

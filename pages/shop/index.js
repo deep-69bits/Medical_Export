@@ -23,17 +23,17 @@ export default function index({shop,product}){
      <Head>
      <title>Medical Export | Shop</title>
      </Head>
-     <div className='px-10'>
+     <div className=''>
      <h1 className='text-center mt-10 font-normal text-5xl block '>{shop[0].title}</h1>
      <hr  className=' mt-10 mb-10 w-9/12  m-auto'/>
-     <h3 className='mt-10 font-light text-2xl '>{shop[0].content}</h3>
+     <h3 className='mt-10 font-light text-2xl mx-4 '>{shop[0].content}</h3>
      <div  className='grid grid-flow-row lg:grid-cols-3 sm:grid-cols-1 m-auto align-middle w-[90%] mt-20'>
      {
        product.map((item,index)=>{
          return(
           <Link href={"/shop/"+item._id}>
-          <div  className='mt-8 w-[400px] h-[400px] shadow-lg ' >
-          <img className='h-[300px] w-full' src={urlFor(item.productimage).url()}  />
+          <div  className='mt-8 lg:w-[400px] lg:h-[400px] shadow-lg ' >
+          <img className='h-[300px]  w-full' src={urlFor(item.productimage).url()}  />
           </div>
           </Link>
            );
