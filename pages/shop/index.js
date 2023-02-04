@@ -8,7 +8,7 @@ import Link from "next/link";
 import Head from "next/head";
 import PortableText from "react-portable-text";
 
-export default function index({ shop, product, logo,category }) {
+export default function index({ shop, product, logo, category }) {
   const client = createClient({
     projectId: "b5hbcmsc",
     dataset: "production",
@@ -18,21 +18,21 @@ export default function index({ shop, product, logo,category }) {
   function urlFor(source) {
     return builder.image(source);
   }
-  let nav=[];
-  category.map((item,index)=>{
-     let x=item.name
-     let y=item._id;
-     nav.push({x,y});
-  })
+  let nav = [];
+  category.map((item, index) => {
+    let x = item.name;
+    let y = item._id;
+    nav.push({ x, y });
+  });
 
   return (
     <div>
-    <Navbar logo={logo[0].logoimage} cats={nav} />
+      <Navbar logo={logo[0].logoimage} cats={nav} />
       <Head>
         <title>Medical Export | Shop</title>
       </Head>
       <div className="">
-        <h1 className="text-center mt-10 font-normal text-5xl block ">
+        <h1 className="text-center mt-10 font-normal text-5xl block px-4">
           {shop[0].title}
         </h1>
         <hr className=" mt-10 mb-10 w-9/12  m-auto" />
@@ -53,16 +53,16 @@ export default function index({ shop, product, logo,category }) {
             }}
           />
         </div>
-        <div className="grid grid-flow-row lg:grid-cols-3 sm:grid-cols-1  align-middle w-5/6  m-auto mt-20">
+        <div className="grid grid-flow-row lg:grid-cols-3 sm:grid-cols-1  align-middle lg:first-letter:w-5/6   m-auto mt-20">
           {product.map((item, index) => {
             return (
               <Link href={"/shop/" + item._id}>
                 <div className="mt-8 lg:w-[400px]  shadow-lg ">
                   <img
-                    className="h-[300px]  w-full"
+                    className="lg:h-[300px]  h-[250px] w-screen"
                     src={urlFor(item.productimage).url()}
                   />
-                  <div className="w-full py-4 px-4 space-y-4">
+                  <div className="py-4 px-4 lg:w-full w-screen space-y-4">
                     <h1 className="font-light text-2xl">{item.name}</h1>
                     <h1 className="font-light text-xl">PRICE:${item.price}</h1>
                     <p className="font-light text-xl truncate">
@@ -94,13 +94,12 @@ export async function getServerSideProps(context) {
   const query4 = `*[_type == "catergory"]`;
   const category = await client.fetch(query4);
 
-
   return {
     props: {
       shop,
       product,
       logo,
-      category
+      category,
     },
   };
 }

@@ -16,24 +16,24 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home({ products, craousal, logo,category }) {
+export default function Home({ products, craousal, logo, category }) {
   const client = createClient({
     projectId: "b5hbcmsc",
     dataset: "production",
     useCdn: false,
   });
-  
+
   const builder = imageUrlBuilder(client);
   function urlFor(source) {
     return builder.image(source);
   }
-   let nav=[];
-   category.map((item,index)=>{
-      let x=item.name
-      let y=item._id;
-      nav.push({x,y});
-   })
-  
+  let nav = [];
+  category.map((item, index) => {
+    let x = item.name;
+    let y = item._id;
+    nav.push({ x, y });
+  });
+
   return (
     <div>
       <Head>
@@ -52,7 +52,7 @@ export default function Home({ products, craousal, logo,category }) {
               <SwiperSlide key={index}>
                 <div>
                   <img
-                    className="w-full brightness-50  lg:h-[600px] sm:h-[300px]"
+                    className=" brightness-50  lg:h-[600px] h-60 w-full"
                     src={urlFor(item.image).url()}
                   />
                   <p className="text-white font-semibold brightness-75  font-mono lg:text-8xl sm:text-3xl tracking-widest	 text-center sm:w-full mx-auto -translate-y-56  lg:-translate-y-96  ">
@@ -80,10 +80,10 @@ export default function Home({ products, craousal, logo,category }) {
             >
               <div
                 key={index}
-                className="flex-none w-[250px] h-[250px]  mx-10 md:pb-4 "
+                className="flex-none lg:w-[250px] lg:h-[250px] w-[270px] h-[200px]   mx-10 md:pb-4"
               >
                 <img
-                  className="w-[250px] h-[250px]"
+                  className="lg:w-[250px] lg:h-[250px] w-[270px] h-[200px]"
                   src={urlFor(item.productimage).url()}
                 />
                 <div className="w-full flex py-4 justify-between">
@@ -115,13 +115,12 @@ export async function getServerSideProps(context) {
   const query4 = `*[_type == "catergory"]`;
   const category = await client.fetch(query4);
 
-
   return {
     props: {
       products,
       craousal,
       logo,
-      category
+      category,
     },
   };
 }
