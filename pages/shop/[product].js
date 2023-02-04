@@ -6,6 +6,8 @@ import imageUrlBuilder from "@sanity/image-url";
 import Link from 'next/link';
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import { useEffect,useState } from "react";
+import {Sugar} from 'react-preloaders';
 
 export default function product({singleproduct,logo,category}){
   const client = createClient({
@@ -25,7 +27,17 @@ export default function product({singleproduct,logo,category}){
      let y=item._id;
      nav.push({x,y});
   })
-  return (
+
+  const [loading, setLoading] = useState(false)
+  const delay = 3
+  useEffect(() => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, delay * 1000)
+  }, [])
+
+  return !loading ? (
     <div>
     <Navbar logo={logo[0].logoimage} cats={nav} />
        {
@@ -52,6 +64,21 @@ export default function product({singleproduct,logo,category}){
         })
        }
       <Footer/>
+    </div>
+  ):(
+    <div>
+    <Head>
+    {
+      singleproduct.map((item,index)=>{
+        if(item._id==product){
+          return(
+            <title>{item.name}</title>
+          );
+        }
+      })
+     }
+    </Head>
+    <Sugar/>
     </div>
   )
 }

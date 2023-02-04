@@ -3,9 +3,8 @@ import Image from "next/image";
 import { Inter } from "@next/font/google";
 import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
-import ProductSlider from "@/components/ProductSlider";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
+
 import Footer from "../components/Footer";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
@@ -13,6 +12,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useEffect,useState } from "react";
+import {Sugar} from 'react-preloaders';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,7 +35,16 @@ export default function Home({ products, craousal, logo, category }) {
     nav.push({ x, y });
   });
 
-  return (
+  const [loading, setLoading] = useState(false)
+  const delay = 3
+  useEffect(() => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, delay * 1000)
+  }, [])
+
+  return !loading ? (
     <div>
       <Head>
         <title>Medical Export</title>
@@ -97,6 +107,13 @@ export default function Home({ products, craousal, logo, category }) {
       </div>
 
       <Footer />
+    </div>
+  ):(
+    <div>
+    <Head>
+    <title>Medical Export</title>
+    </Head>
+    <Sugar/>
     </div>
   );
 }

@@ -7,17 +7,22 @@ import imageUrlBuilder from "@sanity/image-url";
 import Link from "next/link";
 import Head from "next/head";
 import PortableText from "react-portable-text";
+import { useEffect,useState } from "react";
+import {Sugar} from 'react-preloaders';
 
 export default function index({ shop, product, logo, category }) {
+
   const client = createClient({
     projectId: "b5hbcmsc",
     dataset: "production",
     useCdn: false,
   });
   const builder = imageUrlBuilder(client);
+
   function urlFor(source) {
     return builder.image(source);
   }
+
   let nav = [];
   category.map((item, index) => {
     let x = item.name;
@@ -25,7 +30,16 @@ export default function index({ shop, product, logo, category }) {
     nav.push({ x, y });
   });
 
-  return (
+  const [loading, setLoading] = useState(false)
+  const delay = 3
+  useEffect(() => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, delay * 1000)
+  }, [])
+   
+  return !loading ? (
     <div>
       <Navbar logo={logo[0].logoimage} cats={nav} />
       <Head>
@@ -53,7 +67,7 @@ export default function index({ shop, product, logo, category }) {
             }}
           />
         </div>
-        <div className="grid grid-flow-row lg:grid-cols-3 sm:grid-cols-1  align-middle lg:first-letter:w-5/6   m-auto mt-20">
+        <div className="grid grid-flow-row lg:grid-cols-3 sm:grid-cols-1  align-middle lg:first-letter:w-5/6 lg:ml-20 sm:mx-2 sm:px-4  m-auto mt-20">
           {product.map((item, index) => {
             return (
               <Link href={"/shop/" + item._id}>
@@ -76,6 +90,13 @@ export default function index({ shop, product, logo, category }) {
         </div>
       </div>
       <Footer />
+    </div>
+  ) :(
+    <div>
+    <Head>
+    <title>Medical Export | Shop</title>
+    </Head>
+    <Sugar/>
     </div>
   );
 }
