@@ -1,24 +1,22 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
 import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
-import ProductSlider from '@/components/ProductSlider';
+import ProductSlider from "@/components/ProductSlider";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
-import Footer from '../components/Footer';
-import Navbar from '@/components/Navbar';
-import Link from 'next/link';
-import 'swiper/css'
-import 'swiper/css/pagination'
-import { Autoplay, Pagination } from 'swiper'
-import { Swiper, SwiperSlide } from 'swiper/react'
+import { Carousel } from "react-responsive-carousel";
+import Footer from "../components/Footer";
+import Navbar from "@/components/Navbar";
+import Link from "next/link";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Autoplay, Pagination } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
 
+const inter = Inter({ subsets: ["latin"] });
 
-
-const inter = Inter({ subsets: ['latin'] })
-
-export default function Home({products,craousal,logo}) {
+export default function Home({ products, craousal, logo }) {
   // console.log(products)
   // console.log(craousal)
   const client = createClient({
@@ -26,62 +24,76 @@ export default function Home({products,craousal,logo}) {
     dataset: "production",
     useCdn: false,
   });
-  console.log(logo)
+  console.log(logo);
   const builder = imageUrlBuilder(client);
   function urlFor(source) {
     return builder.image(source);
   }
   return (
     <div>
-    <Head>
-    <title>Medical Export</title>
-    </Head>
-    <Navbar logo={logo[0].logoimage} />
-    <div>
-   <Swiper
-   pagination={{clickable: true,}}
-   autoplay={{ delay: 3000,}}
-   loop={true}
-   modules={[Pagination, Autoplay]}
-   > 
-   {
-    craousal.map((item,index)=>{
-      return(
-        <SwiperSlide key={index}>
-        <div >
-        <img  className='w-full brightness-50  lg:h-[600px] sm:h-[300px]' src={urlFor(item.image).url()}  />
-        <p className='text-white font-semibold font-sans lg:text-5xl sm:text-3xl text-center lg:w-[30%] sm:w-full m-auto -translate-y-44 '>{item.content}</p>
-        </div>
-        </SwiperSlide>
-      );
-    })
-   }
+      <Head>
+        <title>Medical Export</title>
+      </Head>
+      <Navbar logo={logo[0].logoimage} />
+      <div>
+        <Swiper
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 3000 }}
+          loop={true}
+          modules={[Pagination, Autoplay]}
+        >
+          {craousal.map((item, index) => {
+            return (
+              <SwiperSlide key={index}>
+                <div>
+                  <img
+                    className="w-full brightness-50  lg:h-[600px] sm:h-[300px]"
+                    src={urlFor(item.image).url()}
+                  />
+                  <p className="text-white font-semibold brightness-75  font-mono lg:text-8xl sm:text-3xl tracking-widest	 text-center sm:w-full mx-auto -translate-y-56  lg:-translate-y-96  ">
+                    {item.title}
+                  </p>
+                  <p className="text-white font-light brightness-75  font-serif lg:text-5xl sm:text-3xl tracking-widest	 text-center sm:w-full m-auto -translate-y-52  lg:-translate-y-80 ">
+                    {item.content}
+                  </p>
+                </div>
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+      </div>
+      <h1 className="px-10 text-5xl font-mono font-bold mx-10 my-20">
+        Products
+      </h1>
 
-  </Swiper>
-    </div>
-    <h1 className='px-10 text-5xl font-bold mx-10 my-20'>Products</h1>
-
-    <div className='w-[95%] m-auto h-[350px]  mt-2 flex  overflow-x-auto'>
-     {
-        products.map((item,index)=>{
-          return(
-            <Link href={"/shop/"+item._id} className="hover:scale-105 transition duration-500">
-            <div key={index} className='flex-none w-[300px] h-[300px]  mx-10 md:pb-4   '>
-            <img className='w-[400px] h-[300px]' src={urlFor(item.productimage).url()}  />
-            <div className='w-full flex mt-2 justify-between'>
-            <h1 className='font-bold text-xl'>{item.name}</h1>
-            <h1 className='font-bold text-xl'>${item.price}</h1>
-            </div>
-            </div>
+      <div className="w-[95%] m-auto h-[350px]  mt-2 flex  overflow-x-auto scrollbar-hide ">
+        {products.map((item, index) => {
+          return (
+            <Link
+              href={"/shop/" + item._id}
+              className="scrollbar-hide hover:scale-105 transition duration-500"
+            >
+              <div
+                key={index}
+                className="flex-none w-[250px] h-[250px]  mx-10 md:pb-4 "
+              >
+                <img
+                  className="w-[250px] h-[250px]"
+                  src={urlFor(item.productimage).url()}
+                />
+                <div className="w-full flex py-4 justify-between">
+                  <h1 className="font-light text-xl">{item.name}</h1>
+                  <h1 className="font-light text-xl">${item.price}</h1>
+                </div>
+              </div>
             </Link>
           );
-        })
-     }
+        })}
+      </div>
+
+      <Footer />
     </div>
-      
-    <Footer/>
-    </div>
-  )
+  );
 }
 export async function getServerSideProps(context) {
   const client = createClient({
@@ -93,15 +105,15 @@ export async function getServerSideProps(context) {
   const query2 = `*[_type == "craousal"]`;
   const query3 = `*[_type == "logo"]`;
   const products = await client.fetch(query);
-  const craousal = await client.fetch(query2)
-  const logo = await client.fetch(query3)
+  const craousal = await client.fetch(query2);
+  const logo = await client.fetch(query3);
   console.log(products);
- 
+
   return {
     props: {
       products,
       craousal,
-      logo
+      logo,
     },
   };
 }
