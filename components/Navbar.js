@@ -14,6 +14,7 @@ const Navbar = (props) => {
     function urlFor(source) {
       return builder.image(source);
     }
+    console.log(props.cats)
   return (
     <div>
     <nav className="w-full bg-black shadow">
@@ -74,7 +75,15 @@ const Navbar = (props) => {
                     <li className="text-white hover:text-blue-600">
                         <Link href="/shop" >Shop</Link>
                     </li>
-                   
+                    {
+                        props.cats.map((item,index)=>{
+                            return(
+                                <li key={index} className="text-white hover:text-blue-600">
+                                 <Link href={"/category/"+item.y} >{item.x}</Link>
+                                </li>
+                            );
+                        })
+                    }
                 </ul>
             </div>
         </div>

@@ -8,7 +8,7 @@ import Link from "next/link";
 import Head from "next/head";
 import PortableText from "react-portable-text";
 
-export default function index({ shop, product, logo }) {
+export default function index({ shop, product, logo,category }) {
   const client = createClient({
     projectId: "b5hbcmsc",
     dataset: "production",
@@ -18,10 +18,16 @@ export default function index({ shop, product, logo }) {
   function urlFor(source) {
     return builder.image(source);
   }
+  let nav=[];
+  category.map((item,index)=>{
+     let x=item.name
+     let y=item._id;
+     nav.push({x,y});
+  })
 
   return (
     <div>
-      <Navbar logo={logo[0].logoimage} />
+    <Navbar logo={logo[0].logoimage} cats={nav} />
       <Head>
         <title>Medical Export | Shop</title>
       </Head>
@@ -85,13 +91,16 @@ export async function getServerSideProps(context) {
   const shop = await client.fetch(query);
   const product = await client.fetch(query2);
   const logo = await client.fetch(query3);
-  console.log(shop);
+  const query4 = `*[_type == "catergory"]`;
+  const category = await client.fetch(query4);
+
 
   return {
     props: {
       shop,
       product,
       logo,
+      category
     },
   };
 }

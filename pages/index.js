@@ -16,25 +16,30 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home({ products, craousal, logo }) {
-  // console.log(products)
-  // console.log(craousal)
+export default function Home({ products, craousal, logo,category }) {
   const client = createClient({
     projectId: "b5hbcmsc",
     dataset: "production",
     useCdn: false,
   });
-  console.log(logo);
+  
   const builder = imageUrlBuilder(client);
   function urlFor(source) {
     return builder.image(source);
   }
+   let nav=[];
+   category.map((item,index)=>{
+      let x=item.name
+      let y=item._id;
+      nav.push({x,y});
+   })
+  
   return (
     <div>
       <Head>
         <title>Medical Export</title>
       </Head>
-      <Navbar logo={logo[0].logoimage} />
+      <Navbar logo={logo[0].logoimage} cats={nav} />
       <div>
         <Swiper
           pagination={{ clickable: true }}
@@ -107,13 +112,16 @@ export async function getServerSideProps(context) {
   const products = await client.fetch(query);
   const craousal = await client.fetch(query2);
   const logo = await client.fetch(query3);
-  console.log(products);
+  const query4 = `*[_type == "catergory"]`;
+  const category = await client.fetch(query4);
+
 
   return {
     props: {
       products,
       craousal,
       logo,
+      category
     },
   };
 }
