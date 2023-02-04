@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
-export default function query({singleproduct,logo}){
+export default function query({singleproduct,logo,category}){
     const client = createClient({
         projectId: "b5hbcmsc",
         dataset: "production",
@@ -23,13 +23,18 @@ export default function query({singleproduct,logo}){
       singleproduct.map((item)=>{
          if(item._id==query){product=item.name}
       })
-       
+      let nav=[];
+      category.map((item,index)=>{
+         let x=item.name
+         let y=item._id;
+         nav.push({x,y});
+      })
   return (
     <div>
     <Head>
               <title>Inquire</title>
               </Head>
-              <Navbar logo={logo[0].logoimage} />
+              <Navbar logo={logo[0].logoimage} cats={nav} />
        <div className='grid grid-flow-row lg:grid-cols-2 sm:grid-cols-1 px-10 '>
          <div>
           {
@@ -70,10 +75,13 @@ export async function getServerSideProps(context) {
     const query = `*[_type == "logo" ]`;
     const singleproduct = await client.fetch(query2)
     const logo = await client.fetch(query)
+    const query4 = `*[_type == "catergory"]`;
+    const category = await client.fetch(query4);
     return {
       props: {
        singleproduct,
-       logo
+       logo,
+       category
       },
     };
   }
