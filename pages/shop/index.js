@@ -6,7 +6,9 @@ import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import Link from 'next/link';
 import Head from 'next/head'
-export default function index({shop,product}){
+import PortableText from "react-portable-text"
+
+export default function index({shop,product,logo}){
   const client = createClient({
     projectId: "b5hbcmsc",
     dataset: "production",
@@ -19,15 +21,29 @@ export default function index({shop,product}){
 
   return (
     <div>
-     <Navbar/>
+    <Navbar logo={logo[0].logoimage} />
      <Head>
      <title>Medical Export | Shop</title>
      </Head>
      <div className=''>
      <h1 className='text-center mt-10 font-normal text-5xl block '>{shop[0].title}</h1>
      <hr  className=' mt-10 mb-10 w-9/12  m-auto'/>
-     <h3 className='mt-10 font-light text-2xl mx-4 '>{shop[0].content}</h3>
-     <div  className='grid grid-flow-row lg:grid-cols-3 sm:grid-cols-1 m-auto align-middle w-[90%] mt-20'>
+     <div className='w-9/12  m-auto'>
+     <PortableText 
+     className='m-auto'
+     // Pass in block content straight from Sanity.io
+     content={shop[0].content}
+     projectId="b5hbcmsc"
+     dataset="production"
+     // Optionally override marks, decorators, blocks, etc. in a flat
+     // structure without doing any gymnastics
+     serializers={{
+       h1: (props) => <h1 style={{ color: "red" }} {...props} />,
+       li: ({ children }) => <li className="special-list-item">{children}</li>,
+      }}
+      />
+      </div>
+     <div  className='grid grid-flow-row lg:grid-cols-3 sm:grid-cols-1  align-middle w-9/12  m-auto mt-20'>
      {
        product.map((item,index)=>{
          return(
@@ -53,14 +69,17 @@ export async function getServerSideProps(context) {
   });
   const query = `*[_type == "shop"]`;
   const query2 = `*[_type == "product"]`;
+  const query3 = `*[_type == "logo"]`;
   const shop = await client.fetch(query);
   const product = await client.fetch(query2)
+  const logo = await client.fetch(query3)
   console.log(shop);
  
   return {
     props: {
      shop,
-     product
+     product,
+     logo
     },
   };
 }

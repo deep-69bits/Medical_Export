@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
-export default function query({singleproduct}){
+export default function query({singleproduct,logo}){
     const client = createClient({
         projectId: "b5hbcmsc",
         dataset: "production",
@@ -29,7 +29,7 @@ export default function query({singleproduct}){
     <Head>
               <title>Inquire</title>
               </Head>
-      <Navbar/>
+              <Navbar logo={logo[0].logoimage} />
        <div className='grid grid-flow-row lg:grid-cols-2 sm:grid-cols-1 px-10 '>
          <div>
           {
@@ -67,10 +67,13 @@ export async function getServerSideProps(context) {
       useCdn: false,
     });
     const query2 = `*[_type == "product" ]`;
+    const query = `*[_type == "logo" ]`;
     const singleproduct = await client.fetch(query2)
+    const logo = await client.fetch(query)
     return {
       props: {
-       singleproduct
+       singleproduct,
+       logo
       },
     };
   }

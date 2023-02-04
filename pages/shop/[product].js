@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
-export default function product({singleproduct}){
+export default function product({singleproduct,logo}){
   const client = createClient({
     projectId: "b5hbcmsc",
     dataset: "production",
@@ -21,7 +21,7 @@ export default function product({singleproduct}){
   const { product } = router.query
   return (
     <div>
-      <Navbar/>
+    <Navbar logo={logo[0].logoimage} />
        {
         singleproduct.map((item,index)=>{
           if(item._id==product){
@@ -56,10 +56,13 @@ export async function getServerSideProps(context) {
     useCdn: false,
   });
   const query2 = `*[_type == "product"]`;
+  const query = `*[_type == "logo"]`;
   const singleproduct = await client.fetch(query2)
+  const logo = await client.fetch(query)
   return {
     props: {
-     singleproduct
+     singleproduct,
+     logo
     },
   };
 }

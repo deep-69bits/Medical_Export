@@ -1,16 +1,27 @@
 import React from 'react'
 import { useState } from "react";
 import Link from 'next/link';
-const Navbar = () => {
+import { createClient } from "next-sanity";
+import imageUrlBuilder from "@sanity/image-url";
+const Navbar = (props) => {
+    const client = createClient({
+        projectId: "b5hbcmsc",
+        dataset: "production",
+        useCdn: false,
+      });
     const [navbar, setNavbar] = useState(false);
+    const builder = imageUrlBuilder(client);
+    function urlFor(source) {
+      return builder.image(source);
+    }
   return (
     <div>
     <nav className="w-full bg-black shadow">
     <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
         <div>
-            <div className="flex items-center justify-between py-3 md:py-5 md:block">
-                <a href="javascript:void(0)">
-                    <h2 className="text-2xl font-bold text-white">LOGO</h2>
+            <div className="flex items-center justify-between  md:block">
+                <a href="/">
+                <img className=' h-[70px]' src={urlFor(props.logo).url()}  />
                 </a>
                 <div className="md:hidden">
                     <button
