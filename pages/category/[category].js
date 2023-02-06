@@ -9,6 +9,8 @@ import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import Head from "next/head";
 import index from '../shop';
+import { Rings } from  'react-loader-spinner'
+
 export default function category({ products, craousal, logo, categories }){
    console.log(products)
 
@@ -41,50 +43,87 @@ export default function category({ products, craousal, logo, categories }){
   return  !loading ?(
     <div>
     <Navbar logo={logo[0].logoimage} cats={nav} />
-       {
+    <Head>
+    {
+      categories.map((item,ind)=>{
+        if(item._id==category){
+          return(
+            <title>{item.name}</title>
+          );
+        }
+      })
+    }
+    </Head>
+      <div className='w-[80%] m-auto'>
+      <div className='mt-20'> 
+      {
         categories.map((item,index)=>{
-           if(item._id==category){
+          if(item._id==category){
             return(
               <div>
-               {item.name}
-               <br />
-               {item.content}
+              <h1 className='text-3xl mb-3 font-semibold'>{item.name}</h1>
+              <br />
+              <p>{item.content}</p>
               </div>
-            );
-           }
-        })
-       }
-       <div className="grid grid-flow-row lg:grid-cols-3 sm:grid-cols-1  align-middle lg:first-letter:w-5/6 lg:ml-20 sm:mx-2 sm:px-4  m-auto mt-20">
-       {products.map((item, index) => {
-        if(item?.cat?._ref==category){
-        return (
-          <Link href={"/shop/" + item._id}>
-            <div className="mt-8 lg:w-[400px]  shadow-lg ">
-              <img
+              );
+            }
+          })
+        }
+        </div>
+          <div className="grid grid-flow-row lg:grid-cols-4 sm:grid-cols-1  align-middle lg:first-letter:w-5/6  sm:mx-2 sm:px-4  m-auto mt-20">
+          {products.map((item, index) => {
+            if(item?.cat?._ref==category){
+              return (
+                <Link href={"/shop/" + item._id}>
+                <div className="mt-8 lg:w-[350px]  shadow-lg ">
+                <img
                 className="lg:h-[300px]  h-[250px] w-screen"
                 src={urlFor(item.productimage).url()}
-              />
-              <div className="py-4 px-4 lg:w-full w-screen space-y-4">
+                />
+                <div className="py-4 px-4 lg:w-full w-screen space-y-4">
                 <h1 className="font-light text-2xl">{item.name}</h1>
                 <h1 className="font-light text-xl">PRICE:${item.price}</h1>
                 <p className="font-light text-xl truncate">
-                  {item.content}
+                {item.content}
                 </p>
-              </div>
+                </div>
+                </div>
+                </Link>
+                );
+              }
+            })}
             </div>
-          </Link>
-        );
-        }
-      })}
       </div>
-      <Footer/>
+     <Footer/>
     </div>
   ):(
      <div>
-    <Head>
-    <title>Medical Export</title>
-    </Head>
-    <Sugar/>
+     <Head>
+     {
+       categories.map((item,ind)=>{
+         if(item._id==category){
+           return(
+             <title>{item.name}</title>
+           );
+         }
+       })
+     }
+     </Head>
+    <div className="flex w-screen justify-center items-center mt-[20%]">
+    <div >
+    <Rings
+    className="block"
+    height="120"
+    width="120"
+    color="#000000"
+    radius="12"
+    wrapperStyle={{}}
+    wrapperClass=""
+    visible={true}
+    ariaLabel="rings-loading"
+    />
+    </div>
+    </div>
     </div>
   )
 }

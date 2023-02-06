@@ -14,6 +14,7 @@ import { Autoplay, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useEffect,useState } from "react";
 import {Sugar} from 'react-preloaders';
+import { Rings } from  'react-loader-spinner'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -81,24 +82,19 @@ export default function Home({ products, craousal, logo, category }) {
         Products
       </h1>
 
-      <div className="w-[95%] m-auto h-[350px]  mt-2 flex  overflow-x-auto scrollbar-hide ">
+      <div className="w-[87%] px-10 m-auto h-[350px]  mt-2 grid grid-flow-row lg:grid-cols-5 sm:grid-cols-1 overflow-y-hidden  overflow-x-auto scrollbar-hide ">
         {products.map((item, index) => {
           return (
             <Link
+
               href={"/shop/" + item._id}
-              className="scrollbar-hide hover:scale-105 transition duration-500"
+              className=" scrollbar-hide hover:scale-105 transition duration-500"
             >
-              <div
-                key={index}
-                className="flex-none lg:w-[250px] lg:h-[250px] w-[270px] h-[200px]   mx-10 md:pb-4"
-              >
-                <img
-                  className="lg:w-[250px] lg:h-[250px] w-[270px] h-[200px]"
-                  src={urlFor(item.productimage).url()}
-                />
-                <div className="w-full flex py-4 justify-between">
-                  <h1 className="font-light text-xl">{item.name}</h1>
-                  <h1 className="font-light text-xl">${item.price}</h1>
+              <div key={index} className="h-[400px] w-[300px]">
+                <img className="h-[300px] " src={urlFor(item.productimage).url()}/>
+                <div>
+                 <h1>{item.name}</h1>
+                 <h1>${item.price}</h1>
                 </div>
               </div>
             </Link>
@@ -113,7 +109,21 @@ export default function Home({ products, craousal, logo, category }) {
     <Head>
     <title>Medical Export</title>
     </Head>
-    <Sugar/>
+    <div className="flex w-screen justify-center items-center mt-[20%]">
+    <div >
+    <Rings
+    className="block"
+    height="120"
+    width="120"
+    color="#000000"
+    radius="12"
+    wrapperStyle={{}}
+    wrapperClass=""
+    visible={true}
+    ariaLabel="rings-loading"
+    />
+    </div>
+    </div>
     </div>
   );
 }
@@ -123,7 +133,7 @@ export async function getServerSideProps(context) {
     dataset: "production",
     useCdn: false,
   });
-  const query = `*[_type == "product"]`;
+  const query = `*[_type == "product"][0...5]`;
   const query2 = `*[_type == "craousal"]`;
   const query3 = `*[_type == "logo"]`;
   const products = await client.fetch(query);
