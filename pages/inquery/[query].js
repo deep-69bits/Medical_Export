@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { useEffect } from "react";
-import {Sugar} from 'react-preloaders';
+import { Rings } from  'react-loader-spinner'
 
 export default function query({singleproduct,logo,category}){
     const client = createClient({
@@ -61,13 +61,13 @@ export default function query({singleproduct,logo,category}){
           }
          </div>
          <div className='lg:mx-10 lg:w-5/6 sm:w-full  sm:mx-2 my-20'>
-            <form className='flex flex-col'> 
-             <input className='mx-2 my-3 px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full'  type="text" placeholder='First Name' />
-             <input  className='mx-2 my-3 px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full' type="text" placeholder='Last Name' />
-             <input  className='mx-2 my-3 px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full' type="number" placeholder='Phone Numbmer' />
-             <input  className='mx-2 my-3 px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full' type="text" placeholder='Location' />
-             <input className='mx-2 my-3 px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg rounded  text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full' disabled="true" type="text" value={product} placeholder='Prouduct' />
-             <input className='mx-2 my-3 px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg rounded  text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full' disabled="true" type="text" value={query} placeholder='Prouduct' />
+            <form className='flex flex-col' action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfRIRC-vI5-i7Xpv1hh_Bp0KCDZZD1hZGLhNAqegBVU1Qe_HA/formResponse?embedded=true" target="_self" method="POST" > 
+             <input  name="entry.1970324109" className='mx-2 my-3 px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full'  type="text" placeholder='First Name' />
+             <input  name="entry.2141827571" className='mx-2 my-3 px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full' type="text" placeholder='Last Name' />
+             <input  name="entry.2127117616" className='mx-2 my-3 px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full' type="number" placeholder='Phone Numbmer' />
+             <input  name="entry.946632364" className='mx-2 my-3 px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full' type="text" placeholder='Location' />
+             <input name="entry.113261900" className='mx-2 my-3 px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg rounded  text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full'  type="text"  placeholder='Prouduct' />
+             <input name="entry.1471387974" className='mx-2 my-3 px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg rounded  text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full' type="text"  placeholder='Prouduct' />
               <button type='submit'  className='w-full text-center bg-black text-xl text-white py-2 m-auto block font-semibold ' >Submit</button>
             </form>
          </div>
@@ -87,7 +87,21 @@ export default function query({singleproduct,logo,category}){
       })
      }
     </Head>
-    <Sugar/>
+    <div className="flex w-screen justify-center items-center mt-[20%]">
+   <div >
+   <Rings
+   className="block"
+   height="120"
+   width="120"
+   color="#000000"
+   radius="12"
+   wrapperStyle={{}}
+   wrapperClass=""
+   visible={true}
+   ariaLabel="rings-loading"
+   />
+   </div>
+   </div>
     </div>
   )
 }
