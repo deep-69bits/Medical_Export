@@ -60,7 +60,20 @@ export default function query({singleproduct,logo,category, subcategories}){
                 if(query==item._id){
                     return(
                         <div className='lg:mx-10 sm:mx-2 my-10' key={item.index}>
-                        <img className='lg:h-[600px] sm:h-[300px] w-full' src={urlFor(item.productimage).url()}  />
+                        <div className='h-screen overflow-y-auto'>
+                        <img className='lg:h-auto sm:h-[300px] w-full' src={urlFor(item.productimage).url()}  />
+                        <div className='mt-4'>
+                        <h1 className='font-semibold text-4xl'>{item.name}</h1>
+                        <h2 className='font-normal text-xl'>{item._id}</h2>
+                         {
+                          item?.moreimages?.map((it,ind)=>{
+                             return(
+                              <img className='lg:h-auto sm:h-[300px] w-full' src={urlFor(it).url()}  />
+                             );
+                          })
+                         }
+                        </div>
+                         </div>
                         </div>
                     );
                 }
@@ -74,7 +87,7 @@ export default function query({singleproduct,logo,category, subcategories}){
              <input  name="entry.2127117616" className='mx-2 my-3 px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full' type="number" placeholder='Phone Numbmer' />
              <input  name="entry.946632364" className='mx-2 my-3 px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full' type="text" placeholder='Location' />
              <input name="entry.113261900" className='mx-2 my-3 px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg rounded  text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full'  type="text"  placeholder='Prouduct' />
-             <input name="entry.1471387974" className='mx-2 my-3 px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg rounded  text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full' type="text"  placeholder='Prouduct' />
+             <input name="entry.1471387974" className='mx-2 my-3 px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg rounded  text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full' type="text"  placeholder='Prouduct ID' />
               <button type='submit'  className='w-full text-center bg-black text-xl text-white py-2 m-auto block font-semibold ' >Submit</button>
             </form>
          </div>
