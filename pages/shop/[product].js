@@ -71,8 +71,10 @@ export default function product({singleproduct,logo,category,subcategories}){
           }
         })
        }
-       <h1>Realted Products</h1>
-       <div>
+       <h1 className='w-[90%] m-auto font-semibold text-2xl'>Realted Products</h1>
+       <div className='w-[90%] m-auto'>
+       
+       <div className=' grid grid-flow-row lg:grid-cols-4 sm:grid-cols-1'>
        {
         singleproduct.map((item,index)=>{
           
@@ -97,6 +99,7 @@ export default function product({singleproduct,logo,category,subcategories}){
           }
         })
        }
+       </div>
        </div>
       <Footer/>
     </div>

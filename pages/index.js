@@ -78,30 +78,49 @@ export default function Home({ products, craousal, logo, category }) {
           })}
         </Swiper>
       </div>
-      <h1 className="px-10 text-5xl font-mono font-bold mx-10 my-20">
-        Products
-      </h1>
-
-      <div className="w-[87%] px-10 m-auto h-[350px]  mt-2 grid grid-flow-row lg:grid-cols-5 sm:grid-cols-1 overflow-y-hidden  overflow-x-auto scrollbar-hide ">
-        {products.map((item, index) => {
-          return (
-            <Link
-
-              href={"/shop/" + item._id}
-              className=" scrollbar-hide hover:scale-105 transition duration-500"
-            >
-              <div key={index} className="h-[400px] w-[300px]">
-                <img className="h-[300px] " src={urlFor(item.productimage).url()}/>
-                <div>
-                 <h1>{item.name}</h1>
-                 <h1>${item.price}</h1>
+       
+      <div className="w-[85%] m-auto">
+      
+      {
+        category.map((it,ind)=>{
+          return(
+               <div key={ind}>
+                <div className="lg:flex  mt-10 sm:block justify-between">
+                <h1 className="text-2xl font-semibold my-4">{it.name}</h1>
+                <Link href={"/category/" + it._id} className="hover:underline font-semibold">View all</Link>
                 </div>
-              </div>
-            </Link>
-          );
-        })}
+                <h3 className="font-light">{it.content}</h3>
+                 <div className="grid grid-flow-row lg:grid-cols-4 sm:grid-cols-1">
+                   {
+                    products.map((item,index)=>{
+                       if(item.cat._ref==it._id ){
+                          return(
+                            <Link href={"/shop/" + item._id} className="mx-3">
+                                  <div className="mt-8  lg:w-[400px] mx-3 shadow-lg ">
+                                    <img
+                                      className="lg:h-[300px]  h-[250px] w-screen"
+                                      src={urlFor(item.productimage).url()}
+                                    />
+                                    <div className="py-4 px-4 lg:w-full w-screen space-y-4">
+                                      <h1 className="font-light text-2xl">{item.name}</h1>
+                                      <h1 className="font-light text-xl">PRICE:${item.price}</h1>
+                                      <p className="font-light text-xl truncate">
+                                        {item.content}
+                                      </p>
+                                    </div>
+                                  </div>
+                            </Link>
+                          );
+                       }
+                    })
+                   }
+                 </div>
+                </div>
+                )
+              })
+      }
+      
       </div>
-
       <Footer />
     </div>
   ):(
@@ -133,7 +152,7 @@ export async function getServerSideProps(context) {
     dataset: "production",
     useCdn: false,
   });
-  const query = `*[_type == "product"][0...5]`;
+  const query = `*[_type == "product"]`;
   const query2 = `*[_type == "craousal"]`;
   const query3 = `*[_type == "logo"]`;
   const products = await client.fetch(query);

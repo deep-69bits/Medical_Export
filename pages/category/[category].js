@@ -80,14 +80,21 @@ export default function category({ products, craousal, logo, categories, subcate
               })
             }
           </div>
+          <br/>
+          <br/>
+          <hr></hr>
+
         </div>
         {
           subcategories.map((it, ind) => {
             if (it?.cat?._ref == category) {
               return (
                 <div key={ind}>
-                  <h1>{it.name}</h1>
-                  <h1>{it.content}</h1>
+                <div className="lg:flex  mt-10 sm:block justify-between">
+                <h1 className="text-2xl font-semibold my-4">{it.name}</h1>
+                <Link href={"/subcategory/" + it._id} className="hover:underline font-semibold">View all</Link>
+                 </div>
+                 <div className="grid grid-flow-row lg:grid-cols-4 sm:grid-cols-1">
                   {products.map((item, index) => {
                     if (item?.subcat?._ref == it._id) {
                       return (
@@ -110,6 +117,7 @@ export default function category({ products, craousal, logo, categories, subcate
                     }
                   })
                   }
+                  </div>
                 </div>
               );
             }

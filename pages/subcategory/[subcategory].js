@@ -52,26 +52,30 @@ export default function subcategory({ products, craousal, logo, categories,subca
       })
     }
     </Head>
-    <div>
+    <div className='mt-10 w-[85%] m-auto'>
     {
         subcategories.map((item,ind)=>{
           if(item._id==subcategory){
             return(
               <div>
-              <h1>{item.name}</h1>
-              <h1>{item.content}</h1>
+              <div className="lg:flex  mt-10 sm:block justify-between">
+              <h1 className="text-2xl font-semibold my-4">{item.name}</h1>
+              </div>
+              <h3 className="font-light">{item.content}</h3>
               </div>
             );
           }
         })
       }
     </div>
-    <div className="grid grid-flow-row lg:grid-cols-4 sm:grid-cols-1  align-middle lg:first-letter:w-5/6  sm:mx-2 sm:px-4  m-auto mt-20">
+    <div className='w-[85%] m-auto '> 
+  
+    <div className="grid grid-flow-row lg:grid-cols-3 sm:grid-cols-1  w-[85%]  align-middle lg:first-letter:w-5/6  sm:mx-2 sm:px-4  m-auto mt-20">
     {products.map((item, index) => {
       if(item?.subcat?._ref==subcategory){
         return (
           <Link href={"/shop/" + item._id}>
-          <div className="mt-8 lg:w-[350px]  shadow-lg ">
+          <div className="mt-8 lg:w-[350px]   shadow-lg ">
           <img
           className="lg:h-[300px]  h-[250px] w-screen"
           src={urlFor(item.productimage).url()}
@@ -88,6 +92,7 @@ export default function subcategory({ products, craousal, logo, categories,subca
           );
         }
       })}
+     </div>
      </div>
     <Footer/>
     </div>
