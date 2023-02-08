@@ -72,16 +72,16 @@ export default function product({singleproduct,logo,category,subcategories}){
         })
        }
        <h1 className='w-[90%] m-auto font-semibold text-2xl'>Realted Products</h1>
-       <div className='w-[90%] m-auto'>
+       <div className='lg:w-[90%] sm:w-full m-auto'>
        
        <div className=' grid grid-flow-row lg:grid-cols-4 sm:grid-cols-1'>
        {
         singleproduct.map((item,index)=>{
           
-          if(subcateg!="" && item.subcat?._ref==subcateg  && item._id!=product){
+          if(subcateg!=null && item.subcat?._ref==subcateg  && item._id!=product){
             return(
               <Link href={"/shop/" + item._id}>
-          <div className="mt-8 lg:w-[350px]  shadow-lg ">
+          <div className="mt-8 lg:w-[350px]  sm:w-[300px] shadow-lg ">
           <img
           className="lg:h-[300px]  h-[250px] w-screen"
           src={urlFor(item.productimage).url()}

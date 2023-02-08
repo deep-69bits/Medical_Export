@@ -79,7 +79,7 @@ export default function Home({ products, craousal, logo, category }) {
         </Swiper>
       </div>
        
-      <div className="w-[85%] m-auto">
+      <div className="lg:w-[85%] sm:w-full m-auto">
       
       {
         category.map((it,ind)=>{
@@ -95,8 +95,8 @@ export default function Home({ products, craousal, logo, category }) {
                     products.map((item,index)=>{
                        if(item.cat._ref==it._id ){
                           return(
-                            <Link href={"/shop/" + item._id} className="mx-3">
-                                  <div className="mt-8  lg:w-[400px] mx-3 shadow-lg ">
+                            <Link href={"/shop/" + item._id} className="">
+                                  <div className="mt-8  lg:w-[400px]  shadow-lg ">
                                     <img
                                       className="lg:h-[300px]  h-[250px] w-screen"
                                       src={urlFor(item.productimage).url()}

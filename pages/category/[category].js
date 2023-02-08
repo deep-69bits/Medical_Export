@@ -54,7 +54,7 @@ export default function category({ products, craousal, logo, categories, subcate
           })
         }
       </Head>
-      <div className='w-[80%] m-auto'>
+      <div className='lg:w-[80%] sm:w-full sm:px-2 lg:px-0 m-auto'>
         <div className='mt-20'>
           {
             categories.map((item, index) => {
