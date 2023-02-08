@@ -52,7 +52,7 @@ export default function subcategory({ products, craousal, logo, categories,subca
       })
     }
     </Head>
-    <div className='mt-10 w-[85%] m-auto'>
+    <div className='mt-10 lg:w-[85%] sm:w-full m-auto'>
     {
         subcategories.map((item,ind)=>{
           if(item._id==subcategory){
@@ -68,9 +68,9 @@ export default function subcategory({ products, craousal, logo, categories,subca
         })
       }
     </div>
-    <div className='w-[85%] m-auto '> 
+    <div className='lg:w-[85%] sm:w-full m-auto '> 
   
-    <div className="grid grid-flow-row lg:grid-cols-3 sm:grid-cols-1  w-[85%]  align-middle lg:first-letter:w-5/6  sm:mx-2 sm:px-4  m-auto mt-20">
+    <div className="grid grid-flow-row lg:grid-cols-3 sm:grid-cols-1  lg:w-[85%] sm:w-full align-middle lg:first-letter:w-5/6  sm:mx-2 sm:px-4  m-auto mt-20">
     {products.map((item, index) => {
       if(item?.subcat?._ref==subcategory){
         return (
