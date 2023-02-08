@@ -61,14 +61,14 @@ export default function query({singleproduct,logo,category, subcategories}){
                     return(
                         <div className='lg:mx-10 sm:mx-2 my-10' key={item.index}>
                         <div className='h-screen overflow-y-auto'>
-                        <img className='lg:h-auto sm:h-[300px] w-full' src={urlFor(item.productimage).url()}  />
+                        <img className='lg:h-[500px] sm:h-[300px] w-full' src={urlFor(item.productimage).url()}  />
                         <div className='mt-4'>
                         <h1 className='font-semibold text-4xl'>{item.name}</h1>
-                        <h2 className='font-normal text-xl'>{item._id}</h2>
+                        <h2 className='font-normal mt-2 text-xl'>{item._id}</h2>
                          {
                           item?.moreimages?.map((it,ind)=>{
                              return(
-                              <img className='lg:h-auto sm:h-[300px] w-full' src={urlFor(it).url()}  />
+                              <img className='lg:h-[500px] sm:h-[300px] mt-10 w-full' src={urlFor(it).url()}  />
                              );
                           })
                          }
