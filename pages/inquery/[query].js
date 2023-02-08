@@ -9,18 +9,25 @@ import Head from 'next/head'
 import { useEffect } from "react";
 import { Rings } from  'react-loader-spinner'
 
-export default function query({singleproduct,logo,category}){
+export default function query({singleproduct,logo,category, subcategories}){
     const client = createClient({
         projectId: "b5hbcmsc",
         dataset: "production",
         useCdn: false,
       });
+      
       const builder = imageUrlBuilder(client);
       function urlFor(source) {
         return builder.image(source);
       }
       const router = useRouter()
       const { query } = router.query
+      var subcateg;
+      singleproduct.map((it)=>{
+     if(it._id==query){
+         subcateg=it?.subcat?._ref
+     }
+     })
       var product=""
       singleproduct.map((item)=>{
          if(item._id==query){product=item.name}
@@ -72,6 +79,36 @@ export default function query({singleproduct,logo,category}){
             </form>
          </div>
        </div>
+       <h1 className='w-[90%] m-auto font-semibold text-2xl'>Realted Products</h1>
+       <div className='lg:w-[90%] sm:w-full m-auto'>
+       
+       <div className=' grid grid-flow-row lg:grid-cols-4 sm:grid-cols-1'>
+       {
+        singleproduct.map((item,index)=>{
+          
+          if(subcateg!=null && item.subcat?._ref==subcateg  && item._id!=product){
+            return(
+              <Link href={"/shop/" + item._id}>
+          <div className="mt-8 lg:w-[350px]  sm:w-[300px] shadow-lg ">
+          <img
+          className="lg:h-[300px]  h-[250px] w-screen"
+          src={urlFor(item.productimage).url()}
+          />
+          <div className="py-4 px-4 lg:w-full w-screen space-y-4">
+          <h1 className="font-light text-2xl">{item.name}</h1>
+          <h1 className="font-light text-xl">PRICE:${item.price}</h1>
+          <p className="font-light text-xl truncate">
+          {item.content}
+          </p>
+          </div>
+          </div>
+          </Link>
+            );
+          }
+        })
+       }
+       </div>
+       </div>
       <Footer/>
     </div>
   ):(
@@ -117,11 +154,14 @@ export async function getServerSideProps(context) {
     const logo = await client.fetch(query)
     const query4 = `*[_type == "catergory"]`;
     const category = await client.fetch(query4);
+    const query5 = `*[_type == "subcatergory"]`;
+    const subcategories = await client.fetch(query5);
     return {
       props: {
        singleproduct,
        logo,
-       category
+       category,
+       subcategories
       },
     };
   }
