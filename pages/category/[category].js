@@ -94,12 +94,12 @@ export default function category({ products, craousal, logo, categories, subcate
                 <h1 className="text-2xl font-semibold my-4">{it.name}</h1>
                 <Link href={"/subcategory/" + it._id} className="hover:underline font-semibold">View all</Link>
                  </div>
-                 <div className="grid grid-flow-row lg:grid-cols-3 sm:grid-cols-1">
+                 <div className="grid grid-flow-row lg:grid-cols-4 sm:grid-cols-1">
                   {products.map((item, index) => {
                     if (item?.subcat?._ref == it._id) {
                       return (
-                        <Link href={"/shop/" + item._id} key={index}>
-                          <div className="mt-8 lg:w-[350px]  shadow-lg ">
+                        <Link href={"/shop/" + item._id} key={index} className="mx-2 overflow-x-hidden ">
+                          <div className="mt-8 lg:w-[350px] mx-2  shadow-lg ">
                             <img
                               className="lg:h-[300px]  h-[250px] w-screen"
                               src={urlFor(item.productimage).url()}
