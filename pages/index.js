@@ -90,13 +90,13 @@ export default function Home({ products, craousal, logo, category }) {
                 <Link href={"/category/" + it._id} className="hover:underline font-semibold">View all</Link>
                 </div>
                 <h3 className="font-light">{it.content}</h3>
-                 <div className="grid grid-flow-row lg:grid-cols-3 sm:grid-cols-1">
+                 <div className="grid grid-flow-row lg:grid-cols-4 sm:grid-cols-1">
                    {
                     products.map((item,index)=>{
                        if(item.cat._ref==it._id ){
                           return(
-                            <Link href={"/shop/" + item._id} className="">
-                                  <div className="mt-8  lg:w-[400px]  shadow-lg ">
+                            <Link href={"/shop/" + item._id} className="mx-2 overflow-x-hidden ">
+                                  <div className="mt-8  lg:w-[400px]  mx-2 shadow-lg ">
                                     <img
                                       className="lg:h-[300px]  h-[250px] w-screen"
                                       src={urlFor(item.productimage).url()}
