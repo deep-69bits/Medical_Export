@@ -70,7 +70,7 @@ export default function subcategory({ products, craousal, logo, categories,subca
     </div>
     <div className='lg:w-[85%] sm:w-full m-auto '> 
   
-    <div className="grid grid-flow-row lg:grid-cols-4sm:grid-cols-1  lg:w-[85%] sm:w-full align-middle lg:first-letter:w-5/6  sm:mx-2 sm:px-4  m-auto mt-20">
+    <div className="grid grid-flow-row lg:grid-cols-4 sm:grid-cols-1  lg:w-[85%] sm:w-full align-middle lg:first-letter:w-5/6  sm:mx-2 sm:px-4  m-auto mt-20">
     {products.map((item, index) => {
       if(item?.subcat?._ref==subcategory){
         return (
